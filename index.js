@@ -83,6 +83,32 @@ async function run() {
             const result = await bookingsCollection.deleteOne(query);
             res.json(result);
         })
+
+        //UPDATE API
+        app.put('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedBooking = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    status: 'Confirmed',
+                    user_name: updatedBooking.user_name,
+                    user_email: updatedBooking.user_email,
+                    user_phone: updatedBooking.user_phone,
+                    offering_id: updatedBooking.offering_id,
+                    offering_name: updatedBooking.offering_name,
+                    offering_description: updatedBooking.offering_description,
+                    offering_img: updatedBooking.offering_img,
+                    offering_totalCost: updatedBooking.offering_totalCost
+                },
+            };
+            const result = await bookingsCollection.updateOne(filter, updateDoc, options);
+
+            console.log('Updating user', id);
+            res.json(result);
+        })
     }
     finally {
         // await client.close();

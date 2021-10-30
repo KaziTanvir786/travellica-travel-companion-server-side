@@ -19,31 +19,31 @@ async function run() {
     try {
         await client.connect();
         const database = client.db('travellica-travel-companion');
-        const servicesCollection = database.collection('offerings');
+        const offeringsCollection = database.collection('offerings');
 
 
         //GET API
         app.get('/offerings', async (req, res) => {
-            const cursor = servicesCollection.find({});
-            const services = await cursor.toArray();
-            res.send(services);
+            const cursor = offeringsCollection.find({});
+            const offerings = await cursor.toArray();
+            res.send(offerings);
         })
 
-        //GET single service
+        //GET single offering
         app.get('/offerings/:id', async (req, res) => {
             const id = req.params.id;
-            console.log('Getting specific service', id);
+            console.log('Getting specific offering', id);
             const query = { _id: ObjectId(id) };
-            const service = await servicesCollection.findOne(query);
-            res.json(service);
+            const offering = await offeringsCollection.findOne(query);
+            res.json(offering);
         })
 
         //POST API
         app.post('/offerings', async (req, res) => {
-            const service = req.body;
-            console.log('Hit the post API', service);
+            const offering = req.body;
+            console.log('Hit the post API', offering);
 
-            const result = await servicesCollection.insertOne(service);
+            const result = await offeringsCollection.insertOne(offering);
             console.log(result);
 
             res.json(result);
@@ -53,7 +53,7 @@ async function run() {
         app.delete('/offerings/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await servicesCollection.deleteOne(query);
+            const result = await offeringsCollection.deleteOne(query);
             res.json(result);
         })
     }

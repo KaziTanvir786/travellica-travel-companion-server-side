@@ -20,6 +20,7 @@ async function run() {
         await client.connect();
         const database = client.db('travellica-travel-companion');
         const offeringsCollection = database.collection('offerings');
+        const bookingsCollection = database.collection('bookings');
 
 
         //GET API
@@ -38,12 +39,23 @@ async function run() {
             res.json(offering);
         })
 
-        //POST API
+        //POST offering API
         app.post('/offerings', async (req, res) => {
             const offering = req.body;
             console.log('Hit the post API', offering);
 
             const result = await offeringsCollection.insertOne(offering);
+            console.log(result);
+
+            res.json(result);
+        })
+
+        //POST booking API
+        app.post('/bookings', async (req, res) => {
+            const booking = req.body;
+            console.log('Hit the post API', booking);
+
+            const result = await bookingsCollection.insertOne(booking);
             console.log(result);
 
             res.json(result);

@@ -23,11 +23,18 @@ async function run() {
         const bookingsCollection = database.collection('bookings');
 
 
-        //GET API
+        //GET offerings API
         app.get('/offerings', async (req, res) => {
             const cursor = offeringsCollection.find({});
             const offerings = await cursor.toArray();
             res.send(offerings);
+        })
+
+        //GET offerings API
+        app.get('/bookings', async (req, res) => {
+            const cursor = bookingsCollection.find({});
+            const bookings = await cursor.toArray();
+            res.send(bookings);
         })
 
         //GET single offering

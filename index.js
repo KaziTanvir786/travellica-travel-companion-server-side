@@ -68,11 +68,19 @@ async function run() {
             res.json(result);
         })
 
-        //DELETE API
+        //DELETE offerings API
         app.delete('/offerings/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await offeringsCollection.deleteOne(query);
+            res.json(result);
+        })
+
+        //DELETE bookings API
+        app.delete('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await bookingsCollection.deleteOne(query);
             res.json(result);
         })
     }
